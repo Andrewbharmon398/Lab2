@@ -184,7 +184,7 @@ class DListTest(unittest.TestCase):
         a.append(6)
         a.append(5)
         a.insert(2, 4)
-        a.insert(7, 2)
+        a.insert(2, 7)
         self.assertEqual(a.__getitem__(2), 7)
         self.assertEqual(a.__getitem__(5), 2)
         b = DList()
