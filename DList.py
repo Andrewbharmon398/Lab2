@@ -74,7 +74,7 @@ class DList:
 
         # Convert negative positions to corresponding positive position
         if position < 0:
-            position = self.size - position
+            position = self.size + position
 
         # If the position is in the first half of the list, start from beginning.
         # Otherwise, start from the end.

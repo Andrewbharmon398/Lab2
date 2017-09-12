@@ -119,14 +119,14 @@ class DListTest(unittest.TestCase):
 
     def test_find(self):
         a = DList()
-        self.assertEqual(a._find(3), "Position does not exist")
+        self.assertRaises(IndexError, a._find, 3)
         a.append(7)
         a.append(9)
         a.append(3)
         a.append(6)
         a.append(5)
-        self.assertEqual(a._find(2), DListNode(3))
-        self.assertEqual(a._find(-2), DListNode(6))
+        self.assertEqual(a._find(2).item, 3)
+        self.assertEqual(a._find(-2).item, 6)
 
     def test_getItem(self):
         a = DList()
@@ -184,10 +184,9 @@ class DListTest(unittest.TestCase):
         a.append(6)
         a.append(5)
         a.insert(2, 4)
-        a.insert(7, 2)
+        a.insert(2, 7)
         self.assertEqual(a.__getitem__(2), 7)
-        self.assertEqual(a.__getitem__(5), 2)
-        b = DList()
+        self.assertEqual(a.__getitem__(5), 6)
 
     def test_min(self):
         a = DList()
