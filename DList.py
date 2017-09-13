@@ -2,7 +2,7 @@
 
 #----------------------------------------------------------------------
 # DList.py
-# Gavyn Partlow
+# Gavyn Partlow, Andrew Harmon
 # 09/05/2017
 #----------------------------------------------------------------------
 
@@ -14,8 +14,8 @@ from DListNode import *
 
 class DList:
 
-    '''implementation of subset of Python built-in list API using
-    a doubly linked list'''
+    """implementation of subset of Python built-in list API using
+    a doubly linked list"""
 
     # List implemented as doubly linked nodes
     # invariant:
@@ -30,7 +30,7 @@ class DList:
 
     def __init__(self, seq=None):
 
-        '''creates an empty list'''
+        """creates an empty list"""
 
         self.size = 0
         self.head = None
@@ -42,7 +42,7 @@ class DList:
     
     def __len__(self):
 
-        '''returns number of items in the list'''
+        """returns number of items in the list"""
 
         return self.size
     
@@ -50,7 +50,7 @@ class DList:
 
     def __iter__(self):
 
-        '''forward iterator'''
+        """forward iterator"""
 
         # Iterate through all nodes, returning the item in each node.
         curNode = self.head
@@ -62,11 +62,11 @@ class DList:
 
     def _find(self, position):
 
-        '''private method that returns node that is at location position
+        """private method that returns node that is at location position
         in the list;
         for non negative positions, 0 is first item, size-1 is last item
         for negative positions, -1 is the last item -size is the first
-        item'''
+        item"""
 
         # Raise error if position is out of range
         if not (self.size > position >= -self.size):
@@ -93,7 +93,7 @@ class DList:
 
     def __getitem__(self, position):
 
-        '''return data item at location position'''
+        """return data item at location position"""
 
         # Raise error if position is out of range, since get error is different
         # than del and set errors, for some ungodly reason.
@@ -106,7 +106,7 @@ class DList:
 
     def __setitem__(self, position, value):
 
-        '''set data item at location position to value'''
+        """set data item at location position to value"""
 
         self._find(position).item = value
     
@@ -114,7 +114,7 @@ class DList:
 
     def __delitem__(self, position):
 
-        '''delete item at location position from the list'''
+        """delete item at location position from the list"""
 
         self._delete(position)
     
@@ -122,11 +122,13 @@ class DList:
 
     def _delete(self, position):
 
-        '''private method to delete item at location position from the list'''
+        """private method to delete item at location position from the list"""
 
         # If position is not head or tail and size != 1, find previous node, delete next node, and mend links.
         # Otherwise, adjust head or tail appropriately. Adjust size.
-        if self.size == 1:
+        if self.size == 0:
+            return None
+        elif self.size == 1:
             self.head = None
             self.tail = None
         elif self.size - 1 == position:
@@ -145,7 +147,7 @@ class DList:
 
     def append(self, x):
 
-        '''appends x onto end of the list'''
+        """appends x onto end of the list"""
 
         # Check if list is empty, and adjust head and tail appropriately.
         # Else, set the tail.next to a new node, then update tail and size.
@@ -161,7 +163,7 @@ class DList:
 
     def insert(self, i, x):
 
-        '''inserts x before position i in the list'''
+        """inserts x before position i in the list"""
 
         # If inserting at the beginning or end, just update head or append.
         # Otherwise, find previous node, create new node, and update links and size.
@@ -182,8 +184,8 @@ class DList:
 
     def pop(self, i=None):
 
-        '''returns and removes at position i from list; the default is to
-        return and remove the last item'''
+        """returns and removes at position i from list; the default is to
+        return and remove the last item"""
 
         # Store node at i as a returnNode, update tail and size, and then return the returnNode's item.
         if i is None:
@@ -198,7 +200,7 @@ class DList:
 
     def remove(self, x):
 
-        '''removes the first instance of x from the list'''
+        """removes the first instance of x from the list"""
 
         i = self.index(x)
         if i is not None:
@@ -210,7 +212,7 @@ class DList:
 
     def __min__(self):
 
-        '''return minimum element in the list'''
+        """return minimum element in the list"""
 
         if self.size == 0:
             raise ValueError('min() arg is an empty sequence')
@@ -226,7 +228,7 @@ class DList:
 
     def __max__(self):
 
-        '''return maximum element in the list'''
+        """return maximum element in the list"""
 
         if self.size == 0:
             raise ValueError('max() arg is an empty sequence')
@@ -242,7 +244,7 @@ class DList:
 
     def extend(self, l):
 
-        '''add each element of list l onto the list'''
+        """add each element of list l onto the list"""
 
         # Iterate through the passed sequence, appending each item.
         for x in l:
@@ -252,7 +254,7 @@ class DList:
 
     def count(self, x):
 
-        '''return number of occurrences of x in the list'''
+        """return number of occurrences of x in the list"""
 
         # Initialize tally and iterate through nodes, updating tally as necessary.
         tally = 0
@@ -265,10 +267,12 @@ class DList:
 
     def index(self, x, start=0):
 
-        '''return position of first occurence of x in the list starting
-        at position start'''
+        """return position of first occurrence of x in the list starting
+        at position start"""
 
         # Initialize curNode to start position and iterate until node's item is x, then return.
+        if self.size == 0:
+            return None
         curNode = self._find(start)
         while curNode and curNode.item != x:
             curNode = curNode.next
@@ -281,7 +285,7 @@ class DList:
 
     def reverse_iter(self):
 
-        '''iterate over items in reverse'''
+        """iterate over items in reverse"""
 
         curNode = self.tail
         while curNode:

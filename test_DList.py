@@ -2,8 +2,8 @@
 
 #----------------------------------------------------------------------
 # test_DList.py
-# Dave Reed
-# 08/20/2013
+# Gavyn Partlow, Andrew Harmon
+# 9/12/17
 #----------------------------------------------------------------------
 
 import sys
@@ -105,6 +105,7 @@ class DListTest(unittest.TestCase):
 
     def test_len(self):
         a = DList()
+        self.assertEqual(a.__len__(), 0)
         a.append(7)
         a.append(9)
         a.append(3)
@@ -113,9 +114,6 @@ class DListTest(unittest.TestCase):
         self.assertEqual(a.__len__(), 5)
         b = DList()
         self.assertEqual(b.__len__(), 0)
-
-    def test_iter(self):
-        pass
 
     def test_find(self):
         a = DList()
@@ -130,7 +128,9 @@ class DListTest(unittest.TestCase):
 
     def test_getItem(self):
         a = DList()
+        self.assertRaises(IndexError, a.__getitem__, 2)
         a.append(7)
+        self.assertRaises(IndexError, a.__getitem__, 2)
         a.append(9)
         a.append(3)
         a.append(6)
@@ -152,6 +152,7 @@ class DListTest(unittest.TestCase):
 
     def test_delItem(self):
         a = DList()
+        a.__delitem__(0)
         a.append(7)
         a.append(9)
         a.append(3)
@@ -164,9 +165,6 @@ class DListTest(unittest.TestCase):
         a.__delitem__(0)
         self.assertEqual(a.__len__(), 0)
 
-    def test_delete(self):
-        pass
-
     def test_append(self):
         a = DList()
         a.append(1)
@@ -178,6 +176,9 @@ class DListTest(unittest.TestCase):
 
     def test_insert(self):
         a = DList()
+        a.insert(3, 7)
+        self.assertEqual(a.__len__(), 1)
+        self.assertEqual(a.__getitem__(0), 7)
         a.append(7)
         a.append(9)
         a.append(3)
@@ -185,11 +186,12 @@ class DListTest(unittest.TestCase):
         a.append(5)
         a.insert(2, 4)
         a.insert(2, 7)
-        self.assertEqual(a.__getitem__(2), 7)
-        self.assertEqual(a.__getitem__(5), 6)
+        self.assertEqual(a.__getitem__(3), 4)
+        self.assertEqual(a.__getitem__(6), 6)
 
     def test_min(self):
         a = DList()
+        self.assertRaises(ValueError, a.__min__)
         a.append(7)
         a.append(9)
         a.append(3)
@@ -199,6 +201,7 @@ class DListTest(unittest.TestCase):
 
     def test_max(self):
         a = DList()
+        self.assertRaises(ValueError, a.__max__)
         a.append(7)
         a.append(9)
         a.append(3)
@@ -207,14 +210,17 @@ class DListTest(unittest.TestCase):
         self.assertEqual(a.__max__(), 9)
 
     def test_extend(self):
-        checkList = [1, 3, 5, 7, 9, 8, 6, 4, 2]
+        checkListOne = [ ]
+        checkListTwo = [1, 3, 5, 7, 9, 8, 6, 4, 2]
         a = DList()
+        a.extend(checkListOne)
+        self.assertEqual(a.__len__(), 0)
         a.append(7)
         a.append(9)
         a.append(3)
         a.append(6)
         a.append(5)
-        a.extend(checkList)
+        a.extend(checkListTwo)
         self.assertEqual(a.count(1), 1)
         self.assertEqual(a.count(9), 2)
         self.assertEqual(a.count(6), 2)
@@ -222,6 +228,7 @@ class DListTest(unittest.TestCase):
 
     def test_count(self):
         a = DList()
+        self.assertEqual(a.count(5), 0)
         a.append(7)
         a.append(9)
         a.append(3)
@@ -240,6 +247,7 @@ class DListTest(unittest.TestCase):
 
     def test_index(self):
         a = DList()
+        self.assertEqual(a.index(5), None)
         a.append(7)
         a.append(9)
         a.append(3)
@@ -250,10 +258,6 @@ class DListTest(unittest.TestCase):
         self.assertEqual(a.index(3), 2)
         self.assertEqual(a.index(6), 3)
         self.assertEqual(a.index(5), 4)
-
-
-    def test_reverse_iter(self):
-        pass
 
 #----------------------------------------------------------------------
 
